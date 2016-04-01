@@ -1,1 +1,1 @@
-export {RestExtractor} from './RestExtractor';
+export {ElasticLoader} from './ElasticLoader';
