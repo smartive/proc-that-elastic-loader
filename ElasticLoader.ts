@@ -6,7 +6,7 @@ let elasticsearch = require('elasticsearch');
 export class ElasticLoader implements ILoad {
     private esClient:any;
 
-    constructor(config:any, private index:string, private type:string, private idSelector:(obj:any) => any = o => o.id, private predicate:(obj:any) => boolean = o => true) {
+    constructor(config:any, private index:string, private type:string, private predicate:(obj:any) => boolean = o => true, private idSelector:(obj:any) => any = o => o.id) {
         this.esClient = new elasticsearch.client(config);
     }
 
