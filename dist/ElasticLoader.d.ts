@@ -1,4 +1,4 @@
-import {ILoad} from 'proc-that/dist/interfaces/ILoad';
+import { ILoad } from 'proc-that/dist/interfaces/ILoad';
 export declare class ElasticLoader implements ILoad {
     private index;
     private type;

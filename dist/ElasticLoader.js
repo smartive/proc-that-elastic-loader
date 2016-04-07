@@ -24,9 +24,13 @@ var ElasticLoader = (function () {
         this.predicate = predicate;
         this.idSelector = idSelector;
         this.buffer = new Buffer_1.Buffer();
-        this.esClient = new elasticsearch.Client(config);
-        if (config.maxSockets) {
-            this.buffer = new Buffer_1.Buffer(config.maxSockets);
+        var esConfig = JSON.parse(JSON.stringify(config));
+        if (!esConfig.requestTimeout) {
+            esConfig.requestTimeout = 1000 * 60 * 5;
+        }
+        this.esClient = new elasticsearch.Client(esConfig);
+        if (esConfig.maxSockets) {
+            this.buffer = new Buffer_1.Buffer(esConfig.maxSockets);
         }
     }
     ElasticLoader.prototype.write = function (object) {
@@ -40,14 +44,12 @@ var ElasticLoader = (function () {
         }
         var promise = this.buffer
             .read()
-            .then(function (obj) {
-                return _this.esClient.index({
-                    index: _this.index,
-                    type: _this.type,
+            .then(function (obj) { return _this.esClient.index({
+            index: _this.index,
+            type: _this.type,
             id: id,
             body: object
-                });
-            });
+        }); });
         this.buffer.write(object);
         return promise;
     };
