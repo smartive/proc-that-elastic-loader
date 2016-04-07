@@ -1,4 +1,5 @@
 import {ILoad} from 'proc-that/dist/interfaces/ILoad';
+import {Buffer} from './helpers/Buffer';
 
 let Promise = require('es6-promise').Promise;
 let elasticsearch = require('elasticsearch');
@@ -11,9 +12,13 @@ class NoIdProvidedError extends Error {
 
 export class ElasticLoader implements ILoad {
     private esClient:any;
+    private buffer:Buffer<any> = new Buffer();
 
     constructor(config:any, private index:string, private type:string, private predicate:(obj:any) => boolean = o => true, private idSelector:(obj:any) => any = o => o.id) {
         this.esClient = new elasticsearch.Client(config);
+        if (config.maxSockets) {
+            this.buffer = new Buffer(config.maxSockets);
+        }
     }
 
     write(object:any):Promise<void> {
@@ -27,11 +32,17 @@ export class ElasticLoader implements ILoad {
             return Promise.reject(new NoIdProvidedError(object));
         }
 
-        return this.esClient.index({
-            index: this.index,
-            type: this.type,
-            id: id,
-            body: object
-        });
+        let promise = this.buffer
+            .read()
+            .then(obj => this.esClient.index({
+                index: this.index,
+                type: this.type,
+                id: id,
+                body: object
+            }));
+
+        this.buffer.write(object);
+
+        return promise;
     }
 }
