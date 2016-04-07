@@ -15,12 +15,13 @@ export class ElasticLoader implements ILoad {
     private buffer:Buffer<any> = new Buffer();
 
     constructor(config:any, private index:string, private type:string, private predicate:(obj:any) => boolean = o => true, private idSelector:(obj:any) => any = o => o.id) {
-        if (!config.requestTimeout) {
-            config.requestTimeout = 1000 * 60 * 10;
+        let esConfig = JSON.parse(JSON.stringify(config));
+        if (!esConfig.requestTimeout) {
+            esConfig.requestTimeout = 1000 * 60 * 10;
         }
-        this.esClient = new elasticsearch.Client(config);
-        if (config.maxSockets) {
-            this.buffer = new Buffer(config.maxSockets);
+        this.esClient = new elasticsearch.Client(esConfig);
+        if (esConfig.maxSockets) {
+            this.buffer = new Buffer(esConfig.maxSockets);
         }
     }
 
