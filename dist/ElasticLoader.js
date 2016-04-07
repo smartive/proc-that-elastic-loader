@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var Buffer_1 = require('./helpers/Buffer');
 var Promise = require('es6-promise').Promise;
 var elasticsearch = require('elasticsearch');
 var NoIdProvidedError = (function (_super) {
@@ -22,9 +23,14 @@ var ElasticLoader = (function () {
         this.type = type;
         this.predicate = predicate;
         this.idSelector = idSelector;
+        this.buffer = new Buffer_1.Buffer();
         this.esClient = new elasticsearch.Client(config);
+        if (config.maxSockets) {
+            this.buffer = new Buffer_1.Buffer(config.maxSockets);
+        }
     }
     ElasticLoader.prototype.write = function (object) {
+        var _this = this;
         if (!this.predicate(object)) {
             return Promise.resolve();
         }
@@ -32,12 +38,18 @@ var ElasticLoader = (function () {
         if (id === null || id === undefined) {
             return Promise.reject(new NoIdProvidedError(object));
         }
-        return this.esClient.index({
-            index: this.index,
-            type: this.type,
+        var promise = this.buffer
+            .read()
+            .then(function (obj) {
+                return _this.esClient.index({
+                    index: _this.index,
+                    type: _this.type,
             id: id,
             body: object
-        });
+                });
+            });
+        this.buffer.write(object);
+        return promise;
     };
     return ElasticLoader;
 }());
