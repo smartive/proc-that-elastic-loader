@@ -17,7 +17,10 @@ export class ElasticLoader implements ILoad {
     constructor(config:any, private index:string, private type:string, private predicate:(obj:any) => boolean = o => true, private idSelector:(obj:any) => any = o => o.id) {
         let esConfig = JSON.parse(JSON.stringify(config));
         if (!esConfig.requestTimeout) {
-            esConfig.requestTimeout = 1000 * 60 * 10;
+            // set requestTimeout to 5min.
+            // reason: when you shoot many index requests to the esClient, elasticsearch buffers your requests.
+            // after the default timeout of 30s is exceeded, you receive a TimeoutError and the whole index process fails.
+            esConfig.requestTimeout = 1000 * 60 * 5;
         }
         this.esClient = new elasticsearch.Client(esConfig);
         if (esConfig.maxSockets) {
