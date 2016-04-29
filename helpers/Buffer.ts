@@ -1,7 +1,5 @@
 import {EventEmitter} from 'events';
 
-let Promise = require('es6-promise').Promise;
-
 export class BufferSealedError extends Error {
     constructor() {
         super('Buffer is sealed.');
@@ -9,43 +7,43 @@ export class BufferSealedError extends Error {
 }
 
 export class Buffer<T> extends EventEmitter {
-    private content:T[] = [];
-    private _size:number;
-    private _sealed:boolean = false;
+    private content: T[] = [];
+    private _size: number;
+    private _sealed: boolean = false;
 
-    constructor(initialSize:number = 10) {
+    constructor(initialSize: number = 10) {
         super();
         this._size = initialSize;
     }
 
-    public get size():number {
+    public get size(): number {
         return this._size;
     }
 
-    public set size(value:number) {
+    public set size(value: number) {
         this._size = value;
     }
 
-    public get isFull():boolean {
+    public get isFull(): boolean {
         return this.content.length >= this._size;
     }
 
-    public get isEmpty():boolean {
+    public get isEmpty(): boolean {
         return this.content.length === 0;
     }
 
-    public get sealed():boolean {
+    public get sealed(): boolean {
         return this._sealed;
     }
 
-    public seal():void {
+    public seal(): void {
         this._sealed = true;
         if (this.isEmpty) {
             this.emit('end');
         }
     }
 
-    public read():Promise<T> {
+    public read(): Promise<T> {
         if (!this.isEmpty) {
             let content = this.content.shift();
             this.emit('release', content);
@@ -63,7 +61,7 @@ export class Buffer<T> extends EventEmitter {
         });
     }
 
-    public write(object:T):Promise<T> {
+    public write(object: T): Promise<T> | Promise<void> {
         if (this.sealed) {
             return Promise.reject(new BufferSealedError());
         }

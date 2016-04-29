@@ -1,7 +1,6 @@
-import {ILoad} from 'proc-that/dist/interfaces/ILoad';
+import {ILoad} from 'proc-that';
 import {Buffer} from './helpers/Buffer';
 
-let Promise = require('es6-promise').Promise;
 let elasticsearch = require('elasticsearch');
 
 class NoIdProvidedError extends Error {

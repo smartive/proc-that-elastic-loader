@@ -4,8 +4,6 @@ import sinon = require('sinon');
 import sinonChai = require('sinon-chai');
 import {ElasticLoader} from './ElasticLoader';
 
-let Promise = require('es6-promise').Promise;
-
 let should = chai.should();
 chai.use(asPromised);
 chai.use(sinonChai);

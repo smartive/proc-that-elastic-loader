@@ -1,1 +1,1 @@
-export {ElasticLoader} from './ElasticLoader';
+export * from './ElasticLoader';

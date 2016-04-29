@@ -1,3 +1,20 @@
 language: node_js
 node_js:
-  - "5"
+- '5'
+- '4.2'
+
+script: npm run citest
+after_script: npm install coveralls@^2.11.9 && cat ./coverage/lcov.info | coveralls
+
+before_deploy:
+- npm run bootstrap
+- tsc --outDir .
+
+deploy:
+  provider: npm
+  email: christoph.buehler@bluewin.ch
+  api_key:
+    secure: NoAP3zXpaw7efTltwCT5v//pWSTsCk1pvMVR02gFimdOI4kc9yr45GUAemmMBKDMPyxqwS2rJHl1A6Wps+P6gz2oMAFyioiK5TZI0qQNTVu9ggD7d1hlCr5Is1WZckblU863YckES6u+HoO0eXFC3iGZnh+1BldbTPR1PA9LWFJPGsZzJsDQRpxOWY6TLKRPlE53QmdclcIc//o4vVCldrCAdKojGlOVKhc03IaWt4i+onCszP81rUYkTTPdE2ODwQZrlbn1D01ojPu8UvPM4REKB90P+C9J/9PL1LR95UjHNPr2+nsa5dmbI2IQhAEudvAKOyBJV27DfZ2AcNNQyXc1e3OnH7zhP3Y19rceTzk0DOXnXKrQbzZEZ9ICnPfxv5PaQ+vOFJB4XkyrrF7LBWqNMRiYywt+vCBRelU7RUepXtO5wcj4TJmXUyB2fESL4W90HtPh1AZNvRPL2dH2DZF3tE2XSnG0MSHbwcrO+9ZUFZ2xBxCNM4WW5VCzH5H9z+ieLYqQmDwjBCgQp52Nw5UnJSmHk72Tlbbzphg4e7e40xH00AIVfLQiBHzEMOyRfZbtvS7cI/1SSMpP/sU+9rFUl5GiavupPVbFnzDUNBltXOk6HSaFtlarafO2llUcAGgxRithYLpjGbD1/4ZU+5NyOR4AFBejj0oq1cDAn7Y=
+  on:
+    tags: true
+    repo: smartive/proc-that-elastic-loader
