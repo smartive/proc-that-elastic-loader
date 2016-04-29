@@ -43,4 +43,3 @@ coverage
 *.spec.js.map
 
 .travis.yml
-.testdata

@@ -2,7 +2,7 @@
   "name": "proc-that-elastic-loader",
   "version": "0.3.2",
   "description": "Loader for proc-that. Loads processed items into an elasticsearch index.",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "clean": "rimraf build",
     "bootstrap": "npm install && typings install",
