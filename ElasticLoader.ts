@@ -1,4 +1,5 @@
-import {ILoad} from 'proc-that';
+import {Loader} from 'proc-that';
+import {Observable} from 'rxjs';
 import {Buffer} from './helpers/Buffer';
 
 let elasticsearch = require('elasticsearch');
@@ -9,7 +10,7 @@ class NoIdProvidedError extends Error {
     }
 }
 
-export class ElasticLoader implements ILoad {
+export class ElasticLoader implements Loader {
     private esClient:any;
     private buffer:Buffer<any> = new Buffer();
 
@@ -27,9 +28,9 @@ export class ElasticLoader implements ILoad {
         }
     }
 
-    write(object:any):Promise<void> {
+    write(object: any): Observable<any> {
         if (!this.predicate(object)) {
-            return Promise.resolve();
+            return Observable.empty();
         }
 
         let id = this.idSelector(object);
@@ -49,6 +50,6 @@ export class ElasticLoader implements ILoad {
 
         this.buffer.write(object);
 
-        return promise;
+        return Observable.fromPromise(promise);
     }
 }
