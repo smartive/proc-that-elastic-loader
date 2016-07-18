@@ -36,7 +36,7 @@ export class ElasticLoader implements Loader {
         let id = this.idSelector(object);
 
         if (id === null || id === undefined) {
-            return Promise.reject(new NoIdProvidedError(object));
+            return Observable.throw(new NoIdProvidedError(object));
         }
 
         let promise = this.buffer

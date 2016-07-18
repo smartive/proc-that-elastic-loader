@@ -2,6 +2,7 @@ import chai = require('chai');
 import asPromised = require('chai-as-promised');
 import sinon = require('sinon');
 import sinonChai = require('sinon-chai');
+import {Observable} from 'rxjs';
 import {ElasticLoader} from './ElasticLoader';
 
 let should = chai.should();
@@ -10,30 +11,30 @@ chai.use(sinonChai);
 
 describe('ElasticLoader', () => {
 
-    let loader:ElasticLoader;
-    let client:any;
-    let stub:any;
+    let loader: ElasticLoader;
+    let client: any;
+    let stub: any;
 
     beforeEach(() => {
         client = {
-            index: o => Promise.resolve()
+            index: o => Observable.of(o)
         };
 
-        stub = sinon.stub(client, 'index', o => Promise.resolve());
+        stub = sinon.stub(client, 'index', o => Observable.of(o));
     });
 
     it('should resolve on correct usage', done => {
         loader = new ElasticLoader({}, 'testIndex', 'testType');
         (loader as any).esClient = client;
 
-        loader.write({id: 1, text: 'test'}).then(done, done);
+        loader.write({id: 1, text: 'test'}).subscribe(null, done, done);
     });
 
     it('should use correct index', done => {
         loader = new ElasticLoader({}, 'testIndex', 'testType');
         (loader as any).esClient = client;
 
-        loader.write({id: 1, text: 'test'}).then(() => {
+        loader.write({id: 1, text: 'test'}).subscribe(null, done, () => {
             try {
                 client.index.should.have.been.calledOnce;
                 client.index.should.have.been.calledWithMatch({
@@ -50,7 +51,7 @@ describe('ElasticLoader', () => {
         loader = new ElasticLoader({}, 'testIndex', 'testType');
         (loader as any).esClient = client;
 
-        loader.write({id: 1, text: 'test'}).then(() => {
+        loader.write({id: 1, text: 'test'}).subscribe(null, done, () => {
             try {
                 client.index.should.have.been.calledOnce;
                 client.index.should.have.been.calledWithMatch({
@@ -67,7 +68,7 @@ describe('ElasticLoader', () => {
         loader = new ElasticLoader({}, 'testIndex', 'testType');
         (loader as any).esClient = client;
 
-        loader.write({id: 1, text: 'test'}).then(() => {
+        loader.write({id: 1, text: 'test'}).subscribe(null, done, () => {
             try {
                 client.index.should.have.been.calledOnce;
                 client.index.should.have.been.calledWithMatch({
@@ -84,7 +85,7 @@ describe('ElasticLoader', () => {
         loader = new ElasticLoader({}, 'testIndex', 'testType');
         (loader as any).esClient = client;
 
-        loader.write({id: 1, text: 'test'}).then(() => {
+        loader.write({id: 1, text: 'test'}).subscribe(null, done, () => {
             try {
                 client.index.should.have.been.calledOnce;
                 client.index.should.have.been.calledWithMatch({
@@ -101,7 +102,7 @@ describe('ElasticLoader', () => {
         loader = new ElasticLoader({}, 'testIndex', 'testType', o => o.text === 'test');
         (loader as any).esClient = client;
 
-        loader.write({id: 1, text: 'test'}).then(() => {
+        loader.write({id: 1, text: 'test'}).subscribe(null, done, () => {
             try {
                 client.index.should.have.been.calledOnce;
                 done();
@@ -115,7 +116,7 @@ describe('ElasticLoader', () => {
         loader = new ElasticLoader({}, 'testIndex', 'testType', o => o.text !== 'test');
         (loader as any).esClient = client;
 
-        loader.write({id: 1, text: 'test'}).then(() => {
+        loader.write({id: 1, text: 'test'}).subscribe(null, done, () => {
             try {
                 client.index.should.not.have.been.called;
                 done();
@@ -129,7 +130,7 @@ describe('ElasticLoader', () => {
         loader = new ElasticLoader({}, 'testIndex', 'testType', o => true, o => o.myId);
         (loader as any).esClient = client;
 
-        loader.write({myId: 1, text: 'test'}).then(() => {
+        loader.write({myId: 1, text: 'test'}).subscribe(null, done, () => {
             try {
                 client.index.should.have.been.calledOnce;
                 client.index.should.have.been.calledWithMatch({
@@ -143,12 +144,16 @@ describe('ElasticLoader', () => {
         });
     });
 
-    it('should reject when no id is provided', () => {
+    it('should reject when no id is provided', done => {
         loader = new ElasticLoader({}, 'testIndex', 'testType');
         (loader as any).esClient = client;
 
-        return loader.write({myId: 1, text: 'test'})
-            .should.eventually.be.rejected;
+        loader.write({myId: 1, text: 'test'}).subscribe(null, () => {
+            done();
+        }, () => {
+            done(new Error('did not throw.'));
+        })
     });
 
-});
+})
+;
