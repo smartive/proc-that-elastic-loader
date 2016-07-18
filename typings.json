@@ -1,16 +1,4 @@
 {
-  "dependencies": {},
-  "ambientDependencies": {
-    "es6-shim": "registry:dt/es6-shim#0.31.2+20160317120654",
-    "node": "registry:dt/node#4.0.0+20160319033040"
-  },
-  "ambientDevDependencies": {
-    "mocha": "registry:dt/mocha#2.2.5+20160317120654"
-  },
-  "devDependencies": {
-    "chai": "registry:npm/chai#3.5.0+20160402210230",
-    "chai-as-promised": "registry:npm/chai-as-promised#5.1.0+20160310030142",
-    "sinon": "registry:npm/sinon#1.16.0+20160309002336",
-    "sinon-chai": "registry:npm/sinon-chai#2.8.0+20160310030142"
-  }
+  "name": "proc-that-elastic-loader",
+  "dependencies": {}
 }
