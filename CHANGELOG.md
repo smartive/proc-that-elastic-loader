@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
-[v0.4.0]
+## [v0.4.0]
 ### Added
 - Changelog
 
@@ -14,5 +14,5 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Breaking: update loader to new interface of `proc-that`
 
 
-[Unreleased]: https://github.com/smartive/giuseppe/compare/v0.4.0...master
-[v0.4.0]: https://github.com/smartive/giuseppe/compare/v0.3.2...v0.4.0
+[Unreleased]: https://github.com/smartive/proc-that-elastic-loader/compare/v0.4.0...master
+[v0.4.0]: https://github.com/smartive/proc-that-elastic-loader/compare/v0.3.2...v0.4.0
