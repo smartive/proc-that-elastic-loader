@@ -1,6 +1,6 @@
 {
   "name": "proc-that-elastic-loader",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Loader for proc-that. Loads processed items into an elasticsearch index.",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "test": "mocha --ui bdd --recursive ./build",
     "precitest": "npm run bootstrap && npm run clean && tsc",
     "citest": "istanbul cover -x \"**/*.spec.*\" _mocha --report lcovonly -- --ui bdd --recursive ./build",
-    "develop": "npm run clean && tsc -w"
+    "develop": "npm run clean && tsc -w --sourceMap --pretty"
   },
   "keywords": [
     "etl",
