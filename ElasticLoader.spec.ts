@@ -20,7 +20,7 @@ describe('ElasticLoader', () => {
             index: o => Observable.of(o)
         };
 
-        stub = sinon.stub(client, 'index', o => Observable.of(o));
+        stub = sinon.stub(client, 'index').callsFake(o => Observable.of(o));
     });
 
     it('should resolve on correct usage', done => {
