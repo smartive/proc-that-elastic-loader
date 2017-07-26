@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf build",
-    "bootstrap": "npm install && typings install",
+    "bootstrap": "npm install",
     "pretest": "npm run bootstrap && npm run clean && tsc",
     "test": "mocha --ui bdd --recursive ./build",
     "precitest": "npm run bootstrap && npm run clean && tsc",
