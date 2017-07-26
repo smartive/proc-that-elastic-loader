@@ -61,7 +61,7 @@ export class Buffer<T> extends EventEmitter {
         });
     }
 
-    public write(object: T): Promise<T> | Promise<void> {
+    public write(object: T): Promise<T | void> {
         if (this.sealed) {
             return Promise.reject(new BufferSealedError());
         }
