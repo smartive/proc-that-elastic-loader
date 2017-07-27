@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ElasticLoader should be called with correct id when using custom selector 1`] = `
+Object {
+  "body": Object {
+    "myId": 1,
+    "text": "test",
+  },
+  "id": 1,
+  "index": "testIndex",
+  "type": "testType",
+}
+`;
+
+exports[`ElasticLoader should use correct body 1`] = `
+Object {
+  "body": Object {
+    "id": 1,
+    "text": "test",
+  },
+  "id": 1,
+  "index": "testIndex",
+  "type": "testType",
+}
+`;
+
+exports[`ElasticLoader should use correct id 1`] = `
+Object {
+  "body": Object {
+    "id": 1,
+    "text": "test",
+  },
+  "id": 1,
+  "index": "testIndex",
+  "type": "testType",
+}
+`;
+
+exports[`ElasticLoader should use correct index 1`] = `
+Object {
+  "body": Object {
+    "id": 1,
+    "text": "test",
+  },
+  "id": 1,
+  "index": "testIndex",
+  "type": "testType",
+}
+`;
+
+exports[`ElasticLoader should use correct type 1`] = `
+Object {
+  "body": Object {
+    "id": 1,
+    "text": "test",
+  },
+  "id": 1,
+  "index": "testIndex",
+  "type": "testType",
+}
+`;

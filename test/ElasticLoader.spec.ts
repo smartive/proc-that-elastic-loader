@@ -1,26 +1,18 @@
-import chai = require('chai');
-import asPromised = require('chai-as-promised');
-import sinon = require('sinon');
-import sinonChai = require('sinon-chai');
-import {Observable} from 'rxjs';
-import {ElasticLoader} from './ElasticLoader';
+import { Observable } from 'rxjs/Observable';
 
-let should = chai.should();
-chai.use(asPromised);
-chai.use(sinonChai);
+import { ElasticLoader } from '../src/ElasticLoader';
 
 describe('ElasticLoader', () => {
 
     let loader: ElasticLoader;
     let client: any;
-    let stub: any;
 
     beforeEach(() => {
         client = {
             index: o => Observable.of(o)
         };
 
-        stub = sinon.stub(client, 'index', o => Observable.of(o));
+        client.index = jest.fn(client.index);
     });
 
     it('should resolve on correct usage', done => {
@@ -36,10 +28,8 @@ describe('ElasticLoader', () => {
 
         loader.write({id: 1, text: 'test'}).subscribe(null, done, () => {
             try {
-                client.index.should.have.been.calledOnce;
-                client.index.should.have.been.calledWithMatch({
-                    index: 'testIndex'
-                });
+                expect(client.index.mock.calls.length).toBe(1);
+                expect(client.index.mock.calls[0][0]).toMatchSnapshot();
                 done();
             } catch (e) {
                 done(e);
@@ -53,10 +43,8 @@ describe('ElasticLoader', () => {
 
         loader.write({id: 1, text: 'test'}).subscribe(null, done, () => {
             try {
-                client.index.should.have.been.calledOnce;
-                client.index.should.have.been.calledWithMatch({
-                    type: 'testType'
-                });
+                expect(client.index.mock.calls.length).toBe(1);
+                expect(client.index.mock.calls[0][0]).toMatchSnapshot();
                 done();
             } catch (e) {
                 done(e);
@@ -70,10 +58,8 @@ describe('ElasticLoader', () => {
 
         loader.write({id: 1, text: 'test'}).subscribe(null, done, () => {
             try {
-                client.index.should.have.been.calledOnce;
-                client.index.should.have.been.calledWithMatch({
-                    id: 1
-                });
+                expect(client.index.mock.calls.length).toBe(1);
+                expect(client.index.mock.calls[0][0]).toMatchSnapshot();
                 done();
             } catch (e) {
                 done(e);
@@ -87,10 +73,8 @@ describe('ElasticLoader', () => {
 
         loader.write({id: 1, text: 'test'}).subscribe(null, done, () => {
             try {
-                client.index.should.have.been.calledOnce;
-                client.index.should.have.been.calledWithMatch({
-                    body: {id: 1, text: 'test'}
-                });
+                expect(client.index.mock.calls.length).toBe(1);
+                expect(client.index.mock.calls[0][0]).toMatchSnapshot();
                 done();
             } catch (e) {
                 done(e);
@@ -104,7 +88,7 @@ describe('ElasticLoader', () => {
 
         loader.write({id: 1, text: 'test'}).subscribe(null, done, () => {
             try {
-                client.index.should.have.been.calledOnce;
+                expect(client.index.mock.calls.length).toBe(1);
                 done();
             } catch (e) {
                 done(e);
@@ -118,7 +102,7 @@ describe('ElasticLoader', () => {
 
         loader.write({id: 1, text: 'test'}).subscribe(null, done, () => {
             try {
-                client.index.should.not.have.been.called;
+                expect(client.index.mock.calls.length).toBe(0);
                 done();
             } catch (e) {
                 done(e);
@@ -132,11 +116,8 @@ describe('ElasticLoader', () => {
 
         loader.write({myId: 1, text: 'test'}).subscribe(null, done, () => {
             try {
-                client.index.should.have.been.calledOnce;
-                client.index.should.have.been.calledWithMatch({
-                    id: 1,
-                    body: {myId: 1, text: 'test'}
-                });
+                expect(client.index.mock.calls.length).toBe(1);
+                expect(client.index.mock.calls[0][0]).toMatchSnapshot();
                 done();
             } catch (e) {
                 done(e);

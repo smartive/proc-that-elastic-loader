@@ -1,4 +1,4 @@
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events';
 
 export class BufferSealedError extends Error {
     constructor() {
@@ -43,9 +43,9 @@ export class Buffer<T> extends EventEmitter {
         }
     }
 
-    public read(): Promise<T> {
+    public read(): Promise<T | undefined> {
         if (!this.isEmpty) {
-            let content = this.content.shift();
+            const content = this.content.shift();
             this.emit('release', content);
 
             if (this.isEmpty) {
@@ -56,12 +56,12 @@ export class Buffer<T> extends EventEmitter {
             return Promise.resolve(content);
         }
 
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             this.once('write', () => resolve(this.read()));
         });
     }
 
-    public write(object: T): Promise<T> | Promise<void> {
+    public write(object: T): Promise<T | undefined> {
         if (this.sealed) {
             return Promise.reject(new BufferSealedError());
         }
@@ -72,7 +72,7 @@ export class Buffer<T> extends EventEmitter {
             return Promise.resolve(object);
         }
 
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             this.once('release', () => resolve(this.write(object)));
         });
     }

@@ -1,21 +1,28 @@
-import {Loader} from 'proc-that';
-import {Observable} from 'rxjs';
-import {Buffer} from './helpers/Buffer';
+import { Loader } from 'proc-that';
+import { Observable } from 'rxjs';
 
-let elasticsearch = require('elasticsearch');
+import { Buffer } from './helpers/Buffer';
+
+const elasticsearch = require('elasticsearch');
 
 class NoIdProvidedError extends Error {
-    constructor(private object:any) {
+    constructor(public object: any) {
         super('No id provided by object');
     }
 }
 
 export class ElasticLoader implements Loader {
-    private esClient:any;
-    private buffer:Buffer<any> = new Buffer();
+    private esClient: any;
+    private buffer: Buffer<any> = new Buffer();
 
-    constructor(config:any, private index:string, private type:string, private predicate:(obj:any) => boolean = o => true, private idSelector:(obj:any) => any = o => o.id) {
-        let esConfig = JSON.parse(JSON.stringify(config));
+    constructor(
+        config: any,
+        private index: string,
+        private type: string,
+        private predicate: (obj: any) => boolean = () => true,
+        private idSelector: (obj: any) => any = o => o.id,
+    ) {
+        const esConfig = JSON.parse(JSON.stringify(config));
         if (!esConfig.requestTimeout) {
             // set requestTimeout to 5min.
             // reason: when you shoot many index requests to the esClient, elasticsearch buffers your requests.
@@ -28,24 +35,24 @@ export class ElasticLoader implements Loader {
         }
     }
 
-    write(object: any): Observable<any> {
+    public write(object: any): Observable<any> {
         if (!this.predicate(object)) {
             return Observable.empty();
         }
 
-        let id = this.idSelector(object);
+        const id = this.idSelector(object);
 
         if (id === null || id === undefined) {
             return Observable.throw(new NoIdProvidedError(object));
         }
 
-        let promise = this.buffer
+        const promise = this.buffer
             .read()
-            .then(obj => this.esClient.index({
+            .then(() => this.esClient.index({
+                id,
                 index: this.index,
                 type: this.type,
-                id: id,
-                body: object
+                body: object,
             }));
 
         this.buffer.write(object);
