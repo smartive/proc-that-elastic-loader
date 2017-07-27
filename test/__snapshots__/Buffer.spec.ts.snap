@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Buffer<any> should change size with property 1`] = `10`;
+
+exports[`Buffer<any> should change size with property 2`] = `20`;
