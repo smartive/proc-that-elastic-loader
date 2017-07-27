@@ -1,4 +1,6 @@
 # ElasticLoader
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/smartive/proc-that-elastic-loader.svg)](https://greenkeeper.io/)
 Loader for `proc-that`. Loads processed items into an elasticsearch index.
 
 ##### A bunch of badges
