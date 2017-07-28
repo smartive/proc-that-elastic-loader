@@ -1,11 +1,14 @@
 # ElasticLoader
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/smartive/proc-that-elastic-loader.svg)](https://greenkeeper.io/)
 Loader for `proc-that`. Loads processed items into an elasticsearch index.
 
 ##### A bunch of badges
 
-[![Build Status](https://travis-ci.org/smartive/proc-that-elastic-loader.svg?maxAge=3600)](https://travis-ci.org/smartive/proc-that-elastic-loader) [![npm](https://img.shields.io/npm/v/proc-that-elastic-loader.svg?maxAge=3600)](https://www.npmjs.com/package/proc-that-elastic-loader) [![Coverage status](https://img.shields.io/coveralls/smartive/proc-that-elastic-loader.svg?maxAge=3600)](https://coveralls.io/github/smartive/proc-that-elastic-loader) [![license](https://img.shields.io/github/license/smartive/proc-that-elastic-loader.svg?maxAge=2592000)](https://github.com/smartive/proc-that-elastic-loader)
+[![Build Status](https://travis-ci.org/smartive/proc-that-elastic-loader.svg?maxAge=3600)](https://travis-ci.org/smartive/proc-that-elastic-loader)
+[![npm](https://img.shields.io/npm/v/proc-that-elastic-loader.svg?maxAge=3600)](https://www.npmjs.com/package/proc-that-elastic-loader)
+[![Coverage status](https://img.shields.io/coveralls/smartive/proc-that-elastic-loader.svg?maxAge=3600)](https://coveralls.io/github/smartive/proc-that-elastic-loader)
+[![license](https://img.shields.io/github/license/smartive/proc-that-elastic-loader.svg?maxAge=2592000)](https://github.com/smartive/proc-that-elastic-loader)
+[![Greenkeeper badge](https://badges.greenkeeper.io/smartive/proc-that-elastic-loader.svg)](https://greenkeeper.io/)
 
 ## Installation
 
