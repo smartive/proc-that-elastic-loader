@@ -5,9 +5,11 @@ Loader for `proc-that`. Loads processed items into an elasticsearch index.
 ##### A bunch of badges
 
 [![Build Status](https://travis-ci.org/smartive/proc-that-elastic-loader.svg?maxAge=3600)](https://travis-ci.org/smartive/proc-that-elastic-loader)
+[![Build Status](https://ci.appveyor.com/api/projects/status/382q34ka9its372v?svg=true)](https://ci.appveyor.com/project/buehler/proc-that-elastic-loader)
 [![npm](https://img.shields.io/npm/v/proc-that-elastic-loader.svg?maxAge=3600)](https://www.npmjs.com/package/proc-that-elastic-loader)
 [![Coverage status](https://img.shields.io/coveralls/smartive/proc-that-elastic-loader.svg?maxAge=3600)](https://coveralls.io/github/smartive/proc-that-elastic-loader)
 [![license](https://img.shields.io/github/license/smartive/proc-that-elastic-loader.svg?maxAge=2592000)](https://github.com/smartive/proc-that-elastic-loader)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Greenkeeper badge](https://badges.greenkeeper.io/smartive/proc-that-elastic-loader.svg)](https://greenkeeper.io/)
 
 ## Installation
