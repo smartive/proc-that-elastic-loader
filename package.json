@@ -44,7 +44,7 @@
     "typescript": "^2.6.1"
   },
   "dependencies": {
-    "elasticsearch": "^13.3.1",
+    "elasticsearch": "^14.0.0",
     "proc-that": "^1.0.1",
     "@types/node": "^8.0.47",
     "rxjs": "^5.5.2",
