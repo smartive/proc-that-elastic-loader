@@ -14,13 +14,12 @@ export class ElasticLoader implements Loader {
   private buffer: Buffer<any>;
 
   constructor(
-    config: ClientOptions,
+    esConfig: ClientOptions,
     private index: string,
     private predicate: (obj: any) => boolean = () => true,
     private idSelector: (obj: any) => any = (o) => o.id,
     bufferSize = 10
   ) {
-    const esConfig = JSON.parse(JSON.stringify(config)) as ClientOptions;
     if (!esConfig.requestTimeout) {
       // set requestTimeout to 5min.
       // reason: when you shoot many index requests to the esClient, elasticsearch buffers your requests.
