@@ -46,7 +46,7 @@
     "tslint": "^5.20.1",
     "tsutils": "^3.21.0",
     "typedoc": "^0.24.0",
-    "typescript": "^4.9.4"
+    "typescript": "^5.0.0"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.5.0",
