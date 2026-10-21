@@ -49,7 +49,7 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^8.5.0",
+    "@elastic/elasticsearch": "^9.0.0",
     "@types/node": "^18.11.17",
     "proc-that": "^2.0.0",
     "rxjs": "^7.8.0",
